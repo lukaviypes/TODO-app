@@ -4,13 +4,10 @@ type Storage interface {
 	InsertTask(title string) (int64, error)
 }
 
-func (db *DataBase) InsertTask(title string) (int64, error) {
+func (database *DataBase) InsertTask(title string) (int64, error) {
 	var Id int64
-	res, err := db.Db.Query("INSERT INTO tasks (title) VALUES ($1) RETURNING id", title)
+	err := database.Db.QueryRow("INSERT INTO my_table (title) VALUES ($1) RETURNING id", title).Scan(&Id)
 	if err != nil {
-		return 0, err
-	}
-	if err = res.Scan(Id); err != nil {
 		return 0, err
 	}
 

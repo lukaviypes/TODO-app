@@ -3,19 +3,26 @@ package storage
 import (
 	"database/sql"
 	_ "github.com/lib/pq"
-	"log"
 )
 
 type DataBase struct {
 	Db *sql.DB
 }
 
-func ConnectDb() *DataBase {
-	connStr := "user=username dbname=mydb sslmode=disable"
+func ConnectDb() (*DataBase, error) {
+	connStr := "user=myuser password=mypassword dbname=mydatabase sslmode=disable"
 
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
-	return &DataBase{Db: db}
+	if err := db.Ping(); err != nil {
+		return nil, err
+	}
+
+	return &DataBase{Db: db}, nil
+}
+
+func (db *DataBase) CloseDb() {
+	db.Db.Close()
 }
