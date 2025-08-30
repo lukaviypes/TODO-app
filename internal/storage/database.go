@@ -2,6 +2,7 @@ package storage
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/lib/pq"
 )
 
@@ -9,8 +10,9 @@ type DataBase struct {
 	Db *sql.DB
 }
 
-func ConnectDb() (*DataBase, error) {
-	connStr := "user=myuser password=mypassword dbname=mydatabase sslmode=disable"
+func ConnectDb(myuser, mypassword, mydatabase string) (*DataBase, error) {
+	//connStr := "user=myuser password=mypassword dbname=mydatabase sslmode=disable"
+	connStr := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", myuser, mypassword, mydatabase)
 
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {

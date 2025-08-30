@@ -4,20 +4,19 @@ import (
 	"awesomeProject/internal/storage"
 )
 
-type Service interface {
-	CreateTask(title string) (int64, error)
+type Service struct {
+	Repo   *storage.DataBase
+	Secret string
 }
 
-type service struct {
-	repo storage.Storage
+func NewService(repo *storage.DataBase, secret string) *Service {
+	return &Service{
+		Repo:   repo,
+		Secret: secret}
 }
 
-func NewService(repo storage.Storage) Service {
-	return &service{repo: repo}
-}
-
-func (s *service) CreateTask(title string) (int64, error) {
-	id, err := s.repo.InsertTask(title)
+func (s *Service) CreateTask(title string) (int64, error) {
+	id, err := s.Repo.InsertTask(title)
 
 	if err != nil {
 		return 0, err

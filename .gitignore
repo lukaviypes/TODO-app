@@ -1,0 +1,7 @@
+/bin/ /.exe /.exe~ /.dll /.so /*.dylib
+
+.env *.env .env.local .env.development .env.production
+
+/tmp/ /coverage.out *.test *.prof
+
+.idea/ .vscode/ *.swp *.swos
