@@ -20,7 +20,7 @@ func NewConfig() (*Config, error) {
 		return nil, errors.New("error loading .env file")
 	}
 	cfg := Config{
-		Address:    os.Getenv("SERVICE_ADDRESS"),
+		Address:    os.Getenv("ADDRESS"),
 		DB_user:    os.Getenv("DB_USER"),
 		DB_pass:    os.Getenv("DB_PASS"),
 		DB_name:    os.Getenv("DB_NAME"),

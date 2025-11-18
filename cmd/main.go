@@ -19,6 +19,8 @@ func main() {
 
 	taskService := services.NewService(postgresDb, cfg.JWT_secret)
 	app := api.NewServer(taskService)
-	log.Fatal(app.Driver.Listen(cfg.Address))
+
+	err = app.Driver.Listen(cfg.Address)
+	log.Fatal(err)
 
 }

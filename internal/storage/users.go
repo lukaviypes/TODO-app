@@ -12,11 +12,11 @@ func (db *DataBase) CreateUser(name, hashpassword string) error {
 	res, err := db.Db.Exec("INSERT INTO users (name, hashpassword) VALUES ($1, $2) ", name, hashpassword)
 	if err != nil {
 
-		return err
+		return errors.New("error inserting user")
 	}
 	id, err := res.RowsAffected()
 	if err != nil {
-		return err
+		return errors.New("error inserting user")
 	}
 	if id <= 0 {
 		return errors.New("user already exists")

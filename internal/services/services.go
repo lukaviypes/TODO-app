@@ -9,6 +9,11 @@ type Service struct {
 	Secret string
 }
 
+//type Task struct {
+//	ID   int64
+//	Title string
+//}
+
 func NewService(repo *storage.DataBase, secret string) *Service {
 	return &Service{
 		Repo:   repo,
@@ -25,3 +30,14 @@ func (s *Service) CreateTask(title string) (int64, error) {
 	return id, nil
 
 }
+
+//func (s *Service) GetTask() []string {
+//	id, err := s.Repo.InsertTask(title)
+//
+//	if err != nil {
+//		return 0, err
+//	}
+//
+//	return id, nil
+//
+//}
