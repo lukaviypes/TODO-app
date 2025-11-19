@@ -57,19 +57,19 @@ func (s *Service) GetToken(username, password string) (string, error) {
 
 func (s *Service) ValidateToken(tokenstring string) error {
 
-	token, err := jwt.Parse(tokenstring, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
+	token, err := jwt.Parse(tokenstring, func(token *jwt.Token) (any, error) {
 		return []byte(s.Secret), nil
 	}, jwt.WithValidMethods([]string{jwt.SigningMethodHS256.Alg()}))
+
 	if err != nil {
-		return err
+		log.Fatal(err)
 	}
+
 	log.Println(token)
-	//if !token.Valid {
-	//	return errors.New("invalid token")
-	//}
+
+	if !token.Valid {
+		return errors.New("invalid token")
+	}
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
 		return errors.New("invalid token")
@@ -81,5 +81,5 @@ func (s *Service) ValidateToken(tokenstring string) error {
 		}
 		return nil
 	}
-	return errors.New("invalid token")
+	return nil
 }
